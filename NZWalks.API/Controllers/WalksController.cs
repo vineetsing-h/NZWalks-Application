@@ -25,10 +25,10 @@ namespace NZWalks.API.Controllers
         // CREATE Walk
         // POST: /api/walks
         [HttpPost]
+        [ValidateModel]
         public async Task<IActionResult> Create([FromBody] AddWalkRequestDto addWalkRequestDto)
         {
-            if (ModelState.IsValid)
-            {
+            
                 // Map DTO(AddWalkRequestDto)to Doamin(Walk) Model
                 // For that we dont have to map it manually, AutoMapper will do the work for us, we just have to create the mapping profile in AutoMapper for this 
                 var walkDomainModel = mapper.Map<Walk>(addWalkRequestDto);
@@ -37,11 +37,7 @@ namespace NZWalks.API.Controllers
                 // Map Domain Model to DTO
 
                 return Ok(mapper.Map<WalkDto>(walkDomainModel));
-            }
-            else
-            {
-                return BadRequest(ModelState);
-            }
+            
 
         }
 
@@ -76,10 +72,9 @@ namespace NZWalks.API.Controllers
         // PUT: /api/Walks/{id}
         [HttpPut]
         [Route("{id:Guid}")]
+        [ValidateModel]
         public async Task<IActionResult> Update([FromRoute] Guid id, UpdateWalkRequestDto updateWalkRequestDto)
         {
-            if (ModelState.IsValid)
-            {
                 // Map DTO to Domain Model
                 var walkDomainModel = mapper.Map<Walk>(updateWalkRequestDto);
 
@@ -92,12 +87,7 @@ namespace NZWalks.API.Controllers
 
                 // Map Domain Model to DTO
                 return Ok(mapper.Map<WalkDto>(walkDomainModel));
-            }
-            else
-            {
-                return BadRequest(ModelState);
-            }
-
+            
         }
     
         // Delete a Walk by Id
