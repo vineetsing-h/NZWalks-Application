@@ -7,12 +7,14 @@ using NZWalks.API.Models.Domain;
 using NZWalks.API.Models.DTO;
 using NZWalks.API.Repositries;
 using NZWalks.API.CustomActionFilters;
+using Microsoft.AspNetCore.Authorization;
 
 namespace NZWalks.API.Controllers
 {
     // https://localhost:portnumber/api/regions
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class RegionsController : ControllerBase
     {
         private readonly NZWalksDbContext dbContext;
@@ -105,7 +107,7 @@ namespace NZWalks.API.Controllers
                 };
                 */
                 var regionDomainModel = mapper.Map<Region>(addRegionRequestDto);
-
+            
 
                 // Use Domain Model to create Region
                 // await dbContext.Regions.AddAsync(regionDomainModel);
